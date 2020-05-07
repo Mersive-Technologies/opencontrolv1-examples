@@ -1,9 +1,9 @@
 #Solstice API Demo Script!
-#THIS ONLY WORKS WITH PYTHON 2.7.  If you are running 3.6, you will need different commands. 
 #This script pulls the current screen key for a known IP address so an admin can use browser look-in remotely
 #This script prints formatted results to console.
 
 #import necessary packages:
+from __future__ import print_function
 import sys
 from sys import version
 import time
@@ -16,9 +16,9 @@ false=0
 
 
 #Enter target device URL
-myurl = "http://192.168.3.109"
+myurl = "http://192.168.128.50"
 
-print "Target Device:", myurl
+print("Target Device:", myurl)
 myconfigurl = myurl+'/api/config'
 
 #Create the two target URLs for the device with supplied admin password (change the password to the real value)
@@ -35,10 +35,10 @@ rconfig=eval(rc.text)
 
 #sessionKey: shows current 4-character key needed to access host
 #Returns string of 4 characters
-print "Screen Key:", rconfig.get('m_authenticationCuration',{}).get('sessionKey')
+print("Screen Key:", rconfig.get('m_authenticationCuration',{}).get('sessionKey'))
 
 
 #Shut it down (on your own terms, if running the program directly) 
-end = raw_input("Press any key to exit")
+end = input("Press any key to exit")
 
 
