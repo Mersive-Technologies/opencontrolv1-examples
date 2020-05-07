@@ -51,11 +51,11 @@
 
 import argparse	
 import sys
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import time
 import os
 
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 # Solstice OpenControl is based on JSON records, you can parse by hand or use existing libraries (like I do here)
 # Make sure you take a look at the OpenControl protocol documentation to see what other capabilties it provides.
@@ -133,8 +133,8 @@ def getUserCountFromHost( aIPAddr ):
 
 
 	try:
-		urlRequestResult = urllib2.urlopen( urlStr , timeout=1 )
-	except urllib2.URLError, e:
+		urlRequestResult = urllib.request.urlopen( urlStr , timeout=1 )
+	except urllib.error.URLError as e:
 		return(0)
 
 	hostValuesStr = urlRequestResult.read()
@@ -181,7 +181,7 @@ def main():
 
 		# Output HEADER Info
 		lOutputFile.write("Time, ")
-		for  gHostNumber in xrange(0,gHostCount):
+		for  gHostNumber in range(0,gHostCount):
 			lOutputFile.write(gHostConnectionInfo[gHostNumber][0]+", ")
 		lOutputFile.write("Total\n")
 
@@ -190,7 +190,7 @@ def main():
 			accumulatedUserCount = 0
 			lOutputFile.write("%.0f" % (time.time() - timeStart))
 			# Get number of users Connected for each display.
-			for hostNumber in xrange(0,gHostCount):
+			for hostNumber in range(0,gHostCount):
 				lNumUsers = getUserCountFromHost( gHostConnectionInfo[hostNumber][1]);
 				accumulatedUserCount += lNumUsers
 			
