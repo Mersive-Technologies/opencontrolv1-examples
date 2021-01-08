@@ -1,5 +1,4 @@
 #Solstice API Demo Script!
-#THIS ONLY WORKS WITH PYTHON 2.7.  If you are running 3.6, you will need different commands. 
 #This version exposes every command available using GET through /stats or /config, even though some repeat information.
 #All calls are exposed here, even those that are Pod or Software specific, so not every value will be populated in the results. 
 #This script prints formatted results to console.
@@ -11,6 +10,7 @@ from sys import version
 import time
 import datetime
 import requests
+import pdb
 
 #set value relationships required to properly read all the Boolean results:
 true=1
@@ -25,7 +25,7 @@ print(".............................................................")
 #myurl = input("Enter Target Device URL in http://xxx format: ")
 
 #If you're testing this code against the same device over and over, enter the URL here, uncomment the line, and comment out the "input" line above.
-myurl = "http://192.168.128.50"
+myurl = "http://192.168.128.71"
 
 print("Target Device:", myurl)
 
@@ -38,17 +38,21 @@ myconfigurl = myurl+'/api/config'
 #mystatsurl = myurl+'/api/stats?password='+admin_password
 #myconfigurl = myurl+'/api/config?password='+admin_password
 
+# Not strictly required by the API, but good practice.
+headers = {'content-type': 'application/json'}
+
 #GET the stats url
 print("Getting Stats...")
-rs=requests.get(mystatsurl)
+pdb.set_trace()
+rs=requests.get(mystatsurl, headers=headers)
 
 #GET the config url
 print("Getting Config...")
-rc=requests.get(myconfigurl)
+rc=requests.get(myconfigurl, headers=headers)
 
-#The GET returns a string that we want to use as a dictionary of key:value pairs, so convert results using eval()
-rstats=eval(rs.text)
-rconfig=eval(rc.text)
+#The GET returns a JSON object that we'll convert to a dictionary with the json() function from requests
+rstats=rs.json()
+rconfig=rc.json()
 
 print(rconfig)
 

@@ -29,7 +29,7 @@ print("##########################################")
 #myurl = raw_input("Enter Target Device URL in http://xxx format: ")
 
 #If you're testing this code against the same device over and over, enter the URL here, uncomment the line, and comment out the "input" line above.
-myurl = "http://192.168.128.50"
+myurl = "http://192.168.128.71"
 
 #If you're supplying an Admin password, type it in here and uncomment the URLs that use passwords.  Otherwise, leave it blank as "" 
 admin_password = ""
@@ -52,9 +52,9 @@ rs=requests.get(mystatsurl)
 #GET the config url
 rc=requests.get(myconfigurl)
 
-#The GET returns a string that we want to use as a dictionary of key:value pairs, so convert results using eval()
-rstats=eval(rs.text)
-rconfig=eval(rc.text)
+#The GET returns a JSON object that we'll convert to a dictionary with the json() function from requests
+rstats=rs.json()
+rconfig=rc.json()
 
 #m_displayName: current device display name from the /api/stats URL
 #Returns string
@@ -65,26 +65,35 @@ print("Current Display Name from Stats:", rstats.get('m_displayInformation',{}).
 print("Current Display Name from Config:", rconfig.get('m_displayInformation',{}).get('m_displayName'))
 print(".............")
 
+# Create a dictionary that contains the key value pairs to send to the server
+new_config = {
+    'password': admin_password,
+    'm_displayInformation':
+        {
+            'm_displayName': newname
+        }
+}
+
+
+
 #POST the new display name to the /api/config URL 
-r=requests.post(myconfigurl, json={'password':admin_password,'m_displayInformation':{'m_displayName':newname}})
+r=requests.post(myconfigurl, json=new_config)
 print("Changing Name to: ",newname)
 print(".............")
  
 #Repeat the GET and formatting seen above
 rs=requests.get(mystatsurl)
 rc=requests.get(myconfigurl)
-rstats=eval(rs.text)
-rconfig=eval(rc.text)
+rstats=rs.json()
+rconfig=rc.json()
 
 #Display the new display name, as read from both /api/stats and /api/config
 print("New Display Name from Stats:", rstats.get('m_displayInformation',{}).get('m_displayName'))
 print("New Display Name from Config:", rconfig.get('m_displayInformation',{}).get('m_displayName'))
 if (rstats.get('m_displayInformation',{}).get('m_displayName')==rconfig.get('m_displayInformation',{}).get('m_displayName') == newname):
-	print("Name Change Success!")
+    print("Name Change Success!")
 else:
-	print("Name Change Failure")
+    print("Name Change Failure")
 print(".............")
 
-#Shut it down (on your own terms, if running the program directly) 
-end = input("Press any key to exit")
-#done
+sys.exit(0)
