@@ -1,0 +1,13 @@
+
+This example can be run as a python application or built as a Windows executable.
+
+Getting pods.csv
+* From Dashboard, export the pods
+* Name that file pods.csv
+* Move pods.csv next to the reboot_pods.exe
+
+Building an EXE
+
+* Requires Python 3.8.7
+* pip install py2exe
+* To build execute: python setup.py py2exe

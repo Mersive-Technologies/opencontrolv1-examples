@@ -1,0 +1,4 @@
+dist/
+.vs
+__pycache__/
+*.zip

@@ -1,0 +1,4 @@
+#Display Name, #IP Address, #Port, #Device ID, #Ethernet MAC Address, #Wireless MAC Address, #Product Version
+pod3, 192.168.128.246, 53100, c2edd7d2943d, 58:FC:DB:42:5C:xx, DC:A2:66:67:79:xx, 5.1.25409
+gen2i, 192.168.128.79, 53100, eb50d1b4bccf, 58:FC:DB:41:B8:xx, FC:01:7C:5E:6E:xx, 5.1.22748
+pod1, 192.168.128.196, 53100, 8fe2d43d4ec7, 58:FC:DB:42:5D:xx, 0C:96:E6:9F:7A:xx, 5.2.25479
